@@ -4,7 +4,9 @@
 Python implementation for the paper:
 
 S. Gautam, M. L. Klasky, B. T. Nadiga, T. Wilcox, G. Salazar, and S. Ravishankar (2025). Learning Robust Features for Scatter Removal and Reconstruction in Dynamic ICF X-Ray Tomography. Optics Express - Issue Number.
-arXiv: https://arxiv.org/abs/2408.12766
+
+arXiv preprint [arXiv:2408.12766](https://arxiv.org/abs/2408.12766) (2024)
+ 
 
 
 Overview
