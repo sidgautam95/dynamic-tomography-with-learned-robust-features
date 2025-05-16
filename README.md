@@ -27,7 +27,8 @@ We find that self-supervised and physics-inspired supervised feature models cons
 
 The loss functions for these models are as follows:
 - **PISLR Approach:**  
-  *[Add PISLR equation screenshot here]*
+  ![PISLR Loss Equation](https://github.com/sidgautam95/hydro-robust-features/blob/main/figures/pislr_loss_equation.png)
+
 
 - **SSLR Approach:**  
   *[Add SSLR equation screenshot here]*
