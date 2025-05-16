@@ -7,7 +7,7 @@ def add_noise_to_radiograph(
     direct,
     x_stddevlevel=None,
     y_stddevlevel=None,
-    sigma_scatter=15,
+    sigma_scatter=10,
     scatter_scaling=0.2,
     siglevel=None,
     x_tiltlevel=None,
