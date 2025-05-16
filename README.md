@@ -47,10 +47,10 @@ The loss functions for these models are as follows:
 </p>
 
 Where:
-- \( E_{\theta_1} \) and \( D_{\theta_2} \) are the encoder and decoder networks with parameters \( \theta_1 \) and \( \theta_2 \).
-- \( D \) and \( T \) are the clean and noisy radiographs, respectively.
-- \( \rho \) is the underlying clean density.
-- \( \lambda_{\text{PISLR}} \) and \( \lambda_{\text{SSLR}} \) are hyperparameters controlling the weighting of the respective loss terms.
+- $ E_{\theta_1} $ and $ D_{\theta_2} $ are the encoder and decoder networks with parameters $ \theta_1 $ and $ \theta_2 $.
+- $ D $ and $ T $ are the clean and noisy radiographs, respectively.
+- $ \rho $ is the underlying clean density.
+- $ \lambda_{\text{PISLR}} $ and $ \lambda_{\text{SSLR}} $ are hyperparameters controlling the weighting of the respective loss terms.
 - The expectation is taken over the distribution of densities and radiographs.
 
 ---
