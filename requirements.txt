@@ -1,0 +1,9 @@
+numpy
+scipy
+matplotlib
+torch>=1.12
+torchvision
+tqdm
+pyyaml
+h5py
+scikit-image
