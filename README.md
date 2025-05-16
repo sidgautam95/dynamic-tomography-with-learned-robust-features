@@ -23,7 +23,7 @@ add pislr equastion screenshot
    add ulr equastion screenshot
 
 
-Here, $E_{\theta_1}$ and $D_{\theta_2}$ are the encoder and decoder networks with parameters ${\theta}_1$ and ${\theta}_2$, respectively. $\mathbf{D}$ and $\mathbf{T}$ are the clean and noisy radiographs, respectively, $\bm{\rho}$ is the underlying clean density that leads to the clean radiograph. $\lambda_{\text{PISLR}}$ is the hyperparameter controlling weighting of two terms. The expectation in the loss above is with respect to the distribution of the densities and radiographs.
+Here, $E_{\theta_1}$ and $D_{\theta_2}$ are the encoder and decoder networks with parameters ${\theta}_1$ and $\theta_2$, respectively. ${D}$ and ${T}$ are the clean and noisy radiographs, respectively, ${\rho}$ is the underlying clean density that leads to the clean radiograph. $\lambda_{\text{PISLR}}$ and $\lambda_{\text{SSLR}}$ are the hyperparameter controlling weighting of two terms. The expectation in the loss above is with respect to the distribution of the densities and radiographs.
 
 
 Here, $E_{\theta}$ and 𝐷𝜽2 are the encoder and decoder networks with parameters 𝜽1 and 𝜽2, respectively.
