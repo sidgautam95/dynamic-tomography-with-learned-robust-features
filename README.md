@@ -1,4 +1,4 @@
-# Hydro Robust Features
+# Dynamic Tomography with Learned Robust Features
 
 ## Learning Robust Features for Scatter Removal and Reconstruction in Dynamic ICF X-Ray Tomography
 
