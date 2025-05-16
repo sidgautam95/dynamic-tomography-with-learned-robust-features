@@ -78,9 +78,11 @@ python get_clean_and_noisy_radiographs.py
 
 ### Training Reconstruction Models:
 Train PISLR, SSLR, and ULR models:
+```
 python train_pislr_model.py
 python train_sslr_model.py
 python train_ulr_model.py
+```
 
 ### Evaluation:
 Evaluate the reconstruction performance under different noise conditions:
