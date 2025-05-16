@@ -27,18 +27,19 @@ We find that self-supervised and physics-inspired supervised feature models cons
 
 The loss functions for these models are as follows:
 - **PISLR Approach:**
-- 
 <p align="center">
   <img src="https://github.com/sidgautam95/hydro-robust-features/blob/main/figures/pislr_loss_equation.png" alt="PISLR Loss Equation" width="500"/>
 </p>
 
-
-
-- **SSLR Approach:**  
-  *[Add SSLR equation screenshot here]*
+- **SSLR Approach:**
+<p align="center">
+  <img src="https://github.com/sidgautam95/hydro-robust-features/blob/main/figures/sslr_loss_equation.png" alt="SSLR Loss Equation" width="500"/>
+</p>
 
 - **ULR Approach:**  
-  *[Add ULR equation screenshot here]*
+<p align="center">
+  <img src="https://github.com/sidgautam95/hydro-robust-features/blob/main/figures/ulr_loss_equation.png" alt="ULR Loss Equation" width="500"/>
+</p>
 
 Where:
 - \( E_{\theta_1} \) and \( D_{\theta_2} \) are the encoder and decoder networks with parameters \( \theta_1 \) and \( \theta_2 \).
