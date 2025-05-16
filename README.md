@@ -14,21 +14,16 @@ In this work, we propose a robust feature extraction technique for scatter remov
 
 
 1. Physics-inspired supervised latent representation (PISLR) approach:
-
-   
-\begin{equation}
-    \underset{\bm{\theta}_1, \bm{\theta}_2}{\min} \,\,  \mathbb{E}_{(\bm{\rho},\,\mathbf{T})} \frac{\|D_{\bm{\theta}_2}(E_{\bm{\theta}_1}(\mathbf{T}))- \bm{\rho}\|_2}{\| \bm{\rho}\|_2} + \lambda_{\text{PISLR}} \frac{\|E_{\bm{\theta}_1}(\mathbf{T}) - \mathbf{M} \odot E_f(\bm{\rho})\|_1}{\|\mathbf{M} \odot E_f(\bm{\rho})\|_1}.   
-    \label{eq:masked}
-\end{equation}
+add pislr equastion screenshot
 
 2. Self-Supervised Latent Representation (SSLR) Approach:
+ add pislr equastion screenshot
 
 3. Unsupervised Latent Representation (ULR) Approach:
+   add ulr equastion screenshot
 
 
-
-
-Here, $E_{\bm{\theta}_1}$ and $D_{\bm{\theta}_2}$ are the encoder and decoder networks with parameters $\bm{\theta}_1$ and $\bm{\theta}_2$, respectively. $\mathbf{D}$ and $\mathbf{T}$ are the clean and noisy radiographs, respectively, $\bm{\rho}$ is the underlying clean density that leads to the clean radiograph. $\lambda_{\text{PISLR}}$ is the hyperparameter controlling weighting of two terms. The expectation in the loss above is with respect to the distribution of the densities and radiographs.
+Here, $E_{\theta_1}$ and $D_{\theta_2}$ are the encoder and decoder networks with parameters ${\theta}_1$ and ${\theta}_2$, respectively. $\mathbf{D}$ and $\mathbf{T}$ are the clean and noisy radiographs, respectively, $\bm{\rho}$ is the underlying clean density that leads to the clean radiograph. $\lambda_{\text{PISLR}}$ is the hyperparameter controlling weighting of two terms. The expectation in the loss above is with respect to the distribution of the densities and radiographs.
 
 
 Here, $E_{\theta}$ and 𝐷𝜽2 are the encoder and decoder networks with parameters 𝜽1 and 𝜽2, respectively.
