@@ -38,7 +38,7 @@ The loss functions for these models are as follows:
 
 - **ULR Approach:**  
 <p align="center">
-  <img src="https://github.com/sidgautam95/hydro-robust-features/blob/main/figures/ulr_loss_equation.png" alt="ULR Loss Equation" width="500"/>
+  <img src="https://github.com/sidgautam95/hydro-robust-features/blob/main/figures/ulr_loss_equation.png" alt="ULR Loss Equation" width="300"/>
 </p>
 
 Where:
