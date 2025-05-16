@@ -18,6 +18,13 @@ arXiv preprint [arXiv:2408.12766](https://arxiv.org/abs/2408.12766) (2024)
 In this work, we propose a robust feature extraction technique for scatter removal and density reconstruction in dynamic inertial confinement fusion (ICF) X-ray radiography.  
 An encoder is used to extract robust features from noisy or corrupted X-ray projections, and a decoder reconstructs the underlying density image from the extracted features.
 
+<p align="center">
+  <img src="https://github.com/sidgautam95/hydro-robust-features/blob/main/figures/encoder_decoder_block_diagram.png" alt="Block diagram of encoder-decoder based architecture" width="500"/>
+</p>
+
+<p align="center"><b>Fig. 3.</b> Block diagram of encoder-decoder based architecture. Four different frames of a temporal sequence are used for training.</p>
+
+
 We explore three strategies for the latent-space representation of features:
 1. **Physics-Inspired Supervised Latent Representation (PISLR)**
 2. **Self-Supervised Latent Representation (SSLR)**
