@@ -9,13 +9,35 @@ arXiv preprint [arXiv:2408.12766](https://arxiv.org/abs/2408.12766) (2024)
  
 
 
-Overview
-In this work, we propose feature-guided inverse modeling approaches for scatter removal and density reconstruction in dynamic inertial confinement fusion (ICF) X-ray radiography.
-We introduce three learning-based methods:
+## Overview
+In this work, we propose a robust feature extraction technique for scatter removal and density reconstruction in dynamic inertial confinement fusion (ICF) X-ray radiography. An encoder is used to extract robust features from noisy/corrupted X-ray projections and the decoder reconstructs the underlying density image from the features extracted by the encoder. We explore three options for the latent-space representation of features: physics-inspired supervision, self-supervision, and no supervision. We find that variants based on self-supervised and physics-inspired supervised features perform better over a range of unknown scatter and noise. The loss functions for these latent representation models are as follows:
 
-PISLR (Physics-Informed Scatter Learning and Reconstruction)
 
-SSLR (Scatter and Structure Learning and Reconstruction)
+1. Physics-inspired supervised latent representation (PISLR) approach:
+
+   
+\begin{equation}
+    \underset{\bm{\theta}_1, \bm{\theta}_2}{\min} \,\,  \mathbb{E}_{(\bm{\rho},\,\mathbf{T})} \frac{\|D_{\bm{\theta}_2}(E_{\bm{\theta}_1}(\mathbf{T}))- \bm{\rho}\|_2}{\| \bm{\rho}\|_2} + \lambda_{\text{PISLR}} \frac{\|E_{\bm{\theta}_1}(\mathbf{T}) - \mathbf{M} \odot E_f(\bm{\rho})\|_1}{\|\mathbf{M} \odot E_f(\bm{\rho})\|_1}.   
+    \label{eq:masked}
+\end{equation}
+
+2. Self-Supervised Latent Representation (SSLR) Approach:
+
+3. Unsupervised Latent Representation (ULR) Approach:
+
+
+
+
+Here, $E_{\bm{\theta}_1}$ and $D_{\bm{\theta}_2}$ are the encoder and decoder networks with parameters $\bm{\theta}_1$ and $\bm{\theta}_2$, respectively. $\mathbf{D}$ and $\mathbf{T}$ are the clean and noisy radiographs, respectively, $\bm{\rho}$ is the underlying clean density that leads to the clean radiograph. $\lambda_{\text{PISLR}}$ is the hyperparameter controlling weighting of two terms. The expectation in the loss above is with respect to the distribution of the densities and radiographs.
+
+
+Here, $E_{\theta}$ and 𝐷𝜽2 are the encoder and decoder networks with parameters 𝜽1 and 𝜽2, respectively.
+D and T are the clean and noisy radiographs, respectively, 𝝆 is the underlying clean density
+that leads to the clean radiograph. 𝜆PISLR is the hyperparameter controlling weighting of two
+terms. The expectation in the loss above is with respect to the distribution of the densities and
+radiographs. 𝐸 𝑓 ( 𝝆) is the binary edgemap of the clean density above obtained after applying
+a Canny edge detection filter [28] on the clean density. M is an operator that masks out the
+gas-metal interface in the images retaining primarily the shock feature.
 
 Both approaches utilize scatter-aware features extracted from the input radiographs to guide robust reconstruction under different noise conditions.
 
