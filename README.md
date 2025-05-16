@@ -4,11 +4,12 @@
 
 Python implementation for the paper:
 
-**Siddhant Gautam, Mark L. Klasky, Bernardo T. Nadiga, Todd Wilcox, George Salazar, Saiprasad Ravishankar.**  
+**Siddhant Gautam, Marc L. Klasky, Balasubramanium T. Nadiga, Trevor Wilcox, Gary Salazar, and Saiprasad Ravishankar.**  
 *"Learning Robust Features for Scatter Removal and Reconstruction in Dynamic ICF X-Ray Tomography."*  
-*Optics Express - Issue Number (2025).*  
-arXiv preprint [arXiv:2408.12766](https://arxiv.org/abs/2408.12766) (2024)
+*Opt. Express* **33**, 12345-12367 (2025).  
+DOI: [https://doi.org/xxxx](https://doi.org/xxxc)  
 
+arXiv preprint [arXiv:2408.12766](https://arxiv.org/abs/2408.12766) (2024)
 ---
 
 ## Overview
@@ -52,7 +53,7 @@ Where:
 ## Code Structure
 
 - **Data Simulation:**  
-  Scripts to generate synthetic radiographs with varying scatter, gamma, and photon noise levels.
+  Scripts to generate clean and noisy radiographs with varying scatter, gamma, and photon noise levels.
   
 - **Model Training:**  
   Scripts to train:
