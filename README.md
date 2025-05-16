@@ -89,19 +89,20 @@ python train_ulr_model.py
 Evaluate the reconstruction performance under different noise conditions:
 python evaluate_noise_robustness.py --config configs/eval_noise.yaml
 Evaluate generalization to unseen scatter conditions:
-
+```
 python test_all_models.py
+```
 
 Default parametes for testing using in-population noise parameters included in the script are :
-1. sigma_scatter = 10 
-2. scatter_scaling = 0.2
-3. scatter_polynomial_order = 1
+1. `sigma_scatter = 10`
+2. `scatter_scaling = 0.2`
+3. `scatter_polynomial_order = 1`
 
-Datasets
+### Datasets:
 Synthetic datasets used in this work are not available and are protected under copyright agreement with Los Alamos National Laboratory.
 You may optionally use your own experimental radiographs formatted as 2D projections and adjust the scatter models accordingly.
 
-Contact
+### Contact:
 The code is provided for reproducible research purposes.
 If you have any questions, suggestions, or encounter any issues running the code, please feel free to contact:
 
