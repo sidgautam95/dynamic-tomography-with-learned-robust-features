@@ -26,8 +26,10 @@ We explore three strategies for the latent-space representation of features:
 We find that self-supervised and physics-inspired supervised feature models consistently perform better across a range of unknown scatter and noise conditions.
 
 The loss functions for these models are as follows:
-- **PISLR Approach:**  
-  ![PISLR Loss Equation](https://github.com/sidgautam95/hydro-robust-features/blob/main/figures/pislr_loss_equation.png)
+- **PISLR Approach:** 
+
+<img src="https://github.com/sidgautam95/hydro-robust-features/blob/main/figures/pislr_loss_equation.png" alt="PISLR Loss Equation" width="400"/>
+
 
 
 - **SSLR Approach:**  
