@@ -89,7 +89,7 @@ python get_clean_and_noisy_radiographs.py
 Below is an example visualization showing the clean density and its corresponding direct (clean) radiograph:
 
 <p align="center">
-  <img src="https://github.com/sidgautam95/hydro-robust-features/blob/main/figures/density_and_radiograph.png" alt="Density and Radiograph" width="300"/>
+  <img src="https://github.com/sidgautam95/hydro-robust-features/blob/main/figures/density_and_radiograph.png" alt="Density and Radiograph" width="500"/>
 </p>
 
 
@@ -113,6 +113,17 @@ Default parametes for testing using in-population noise parameters included in t
 1. `sigma_scatter = 10`
 2. `scatter_scaling = 0.2`
 3. `scatter_polynomial_order = 1`
+
+Result of applying the learned models on the radiographs corrupted by noise sand scatter (in-population parameters)
+
+<p align="center">
+  <img src="figures/img_denoised_2dprofile_22_ptwg03.png" alt="Density and Radiograph" width="500"/>
+</p>
+
+
+<p align="center">
+  <img src="figures/img_denoised_2d_4frames_22_ptwg03.png" alt="Density and Radiograph" width="500"/>
+</p>****
 
 ### Datasets:
 Synthetic datasets used in this work are not available and are protected under copyright agreement with Los Alamos National Laboratory.
