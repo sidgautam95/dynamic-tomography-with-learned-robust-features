@@ -86,6 +86,11 @@ Generate simulated radiographs with desired scatter and noise settings:
 python get_clean_and_noisy_radiographs.py
 ```
 
+Below is an example visualization showing the clean density and its corresponding direct (clean) radiograph:
+
+<p align="center">
+  <img src="https://github.com/sidgautam95/hydro-robust-features/blob/main/figures/density_and_radiograph.png" alt="Density and Radiograph" width="300"/>
+</p>
 
 
 ### Training Reconstruction Models:
