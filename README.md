@@ -19,7 +19,7 @@ In this work, we propose a robust feature extraction technique for scatter remov
 An encoder is used to extract robust features from noisy or corrupted X-ray projections, and a decoder reconstructs the underlying density image from the extracted features.
 
 <p align="center">
-  <img src="https://github.com/sidgautam95/hydro-robust-features/blob/main/figures/encoder_decoder_block_stack.png" alt="Block diagram of encoder-decoder based architecture" width="700"/>
+  <img src="figures/encoder_decoder_block_stack.png" alt="Block diagram of encoder-decoder based architecture" width="700"/>
 </p>
 
 <p align="center"><em>Figure 1: Encoder-decoder architecture used for reconstructing temporal sequences of ICF radiographs.</em></p>
@@ -35,19 +35,19 @@ The loss functions for these models are as follows:
 
 - **PISLR Approach:**
 <p align="center">
-  <img src="https://github.com/sidgautam95/hydro-robust-features/blob/main/figures/pislr_loss_equation.png" alt="PISLR Loss Equation" width="500"/>
+  <img src="figures/pislr_loss_equation.png" alt="PISLR Loss Equation" width="500"/>
 </p>
 <p align="center"><em>Figure 2: Loss formulation used for Physics-Inspired Supervised Latent Representation (PISLR).</em></p>
 
 - **SSLR Approach:**
 <p align="center">
-  <img src="https://github.com/sidgautam95/hydro-robust-features/blob/main/figures/sslr_loss_equation.png" alt="SSLR Loss Equation" width="500"/>
+  <img src="figures/sslr_loss_equation.png" alt="SSLR Loss Equation" width="500"/>
 </p>
 <p align="center"><em>Figure 3: Loss formulation used for Self-Supervised Latent Representation (SSLR).</em></p>
 
 - **ULR Approach:**  
 <p align="center">
-  <img src="https://github.com/sidgautam95/hydro-robust-features/blob/main/figures/ulr_loss_equation.png" alt="ULR Loss Equation" width="300"/>
+  <img src="figures/ulr_loss_equation.png" alt="ULR Loss Equation" width="300"/>
 </p>
 <p align="center"><em>Figure 4: Loss formulation used for Unsupervised Latent Representation (ULR).</em></p>
 
@@ -87,7 +87,7 @@ generate_noisy_radiograph
 
 
 <p align="center">
-  <img src="https://github.com/sidgautam95/hydro-robust-features/blob/main/figures/density_and_radiograph.png" alt="Density and Radiograph" width="500"/>
+  <img src="figures/density_and_radiograph.png" alt="Density and Radiograph" width="800"/>
 </p>
 <p align="center"><em>Figure 5: Clean density slice (left) and its corresponding direct radiograph (right) generated using exponential attenuation.</em></p>
 
@@ -115,12 +115,12 @@ Default parameters for in-population testing include:
 ### Results on In-Population Noise and Scatter:
 
 <p align="center">
-  <img src="figures/img_denoised_2dprofile_22_ptwg03.png" alt="Clean and Reconstructed Density" width="700"/>
+  <img src="figures/img_denoised_2dprofile_22_ptwg03.png" alt="Clean and Reconstructed Density" width="800"/>
 </p>
 <p align="center"><em>Figure 6: 2D profiles of the 32<sup>nd</sup> frame showing clean and reconstructed densities, along with error maps for different reconstruction methods. The SSLR method achieves the lowest RMSE.</em></p>
 
 <p align="center">
-  <img src="figures/img_denoised_2d_4frames_22_ptwg03.png" alt="Reconstructed Density - 4 frames" width="700"/>
+  <img src="figures/img_denoised_2d_4frames_22_ptwg03.png" alt="Reconstructed Density - 4 frames" width="800"/>
 </p>
 <p align="center"><em>Figure 7: Reconstructed densities using the SSLR method for four frames (central 300×300 region). The reconstruction captures key features like the outgoing shock.</em></p>
 
