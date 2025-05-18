@@ -117,12 +117,12 @@ Default parametes for testing using in-population noise parameters included in t
 Result of applying the learned models on the radiographs corrupted by noise sand scatter (in-population parameters)
 
 <p align="center">
-  <img src="figures/img_denoised_2dprofile_22_ptwg03.png" alt="Density and Radiograph" width="500"/>
+  <img src="figures/img_denoised_2dprofile_22_ptwg03.png" alt="Clean and Reconstructed Density" width="700"/>
 </p>
 
 
 <p align="center">
-  <img src="figures/img_denoised_2d_4frames_22_ptwg03.png" alt="Density and Radiograph" width="500"/>
+  <img src="figures/img_denoised_2d_4frames_22_ptwg03.png" alt="Reconstructed Density - 4 frames" width="700"/>
 </p>****
 
 ### Datasets:
