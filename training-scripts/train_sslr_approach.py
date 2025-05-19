@@ -27,8 +27,6 @@ lamda = 1e3                               # Regularization coefficient
 gpu_no = 0                                # GPU index to use
 
 # Paths to data directories
-hydro_path = '/egr/research-slim/shared/hydro_simulations/data/'
-rad_path = '/egr/research-slim/shared/hydro_simulations/radiographs-conebeam-all-files/'
 PATH = "sslr_model"                       # Prefix for saved model files and logs
 
 # ------------------------ Data Preparation ------------------------ #
@@ -42,10 +40,6 @@ nTrain = len(training_filenames)
 nValidation = len(validation_filenames)
 Nframes = len(frames)                    # Number of time frames per sample
 
-# Shuffle indices for randomness in data splitting
-perm = np.random.permutation(nTrain + nValidation)
-train_idx = perm[:nTrain]
-val_idx = perm[nTrain:nTrain + nValidation]
 
 # Print configuration details
 print(f"Lambda: {lamda} | GPU: {gpu_no}")
@@ -104,11 +98,11 @@ def compute_loss(filename):
     rad_clean[rad_clean <= 0] = 1e-15
 
     # ---------------- Forward pass through Enet ---------------- #
-    Enet_rad_noisy = Enet(-torch.log(rad_noisy))                     # Encode noisy input
-    Enet_rad_clean = Enet(-torch.log(rad_clean))                     # Encode clean input
+    Enet_rad_noisy = Enet(-torch.log(rad_noisy))                     # Noisy Features
+    Enet_rad_clean = Enet(-torch.log(rad_clean))                     # Clean Features
 
     # ---------------- Forward pass through Dnet ---------------- #
-    Dnet_output = Dnet(Enet_rad_noisy)                               # Decode from latent noisy encoding
+    Dnet_output = Dnet(Enet_rad_noisy)                               # Reconstructed Density
 
     # ---------------- Compute reconstruction loss ---------------- #
     # term1 = relative L2 error (NRMSE) between output and ground truth rho
@@ -184,7 +178,7 @@ for epoch in range(nEpochs):
     torch.save(Dnet.state_dict(), f"{PATH}_dnet.pt")
 
     # Save training metadata
-    np.savez(f"{PATH}.npz", train_idx=train_idx, val_idx=val_idx,
+    np.savez(f"{PATH}.npz",
              batch_size=batch_size, nChannels=nChannels, nEpochs=nEpochs,
              learning_rate=learning_rate, training_filenames=training_filenames,
              validation_filenames=validation_filenames,
