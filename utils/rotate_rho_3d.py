@@ -2,10 +2,10 @@
 Module to spin 2D density profiles into 3D volumes using axisymmetric rotation.
 
 Original Author:
-    Gabriel Maliakal (MSU)
+    Gabriel Maliakal (Michigan State University)
 
 Contributors / Editors:
-    Siddhant Gautam (MSU)
+    Siddhant Gautam (Michigan State University)
 
 Description:
     This script takes a 2D density projection and creates a 3D axisymmetric
