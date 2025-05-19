@@ -2,9 +2,9 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import torch
-from unet import Unet
-from utils import *
-from add_noise_to_radiograph import add_noise_to_radiograph
+from models.unet import Unet
+from utils.utils import *
+from utils.add_noise_to_radiograph import add_noise_to_radiograph
 
 # Set GPU device
 gpu_no = 6
