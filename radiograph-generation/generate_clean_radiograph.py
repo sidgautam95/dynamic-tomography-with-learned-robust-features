@@ -1,7 +1,7 @@
 import numpy as np
 from utils import *
 from rotate_rho_3d import *
-from generate_direct_rad import *
+from compute_areal_density import *
 
 # ------------------------------#
 # Parameters and Configuration  #
@@ -47,7 +47,7 @@ for frame_idx in range(len(frames)):
     areal_density_air = get_areal_density_astra(rho_air_3d, num_views, dl, dso, dsd)
 
     # Generate clean radiograph
-    direct_rad[frame_idx] = generate_direct_rad(areal_density_ta, areal_density_air, collimator, mac_ta, mac_air)
+    direct_rad[frame_idx] = simulate_radiograph(areal_density_ta, areal_density_air, collimator, mac_ta, mac_air)
 
 # Save clean radiograph with metadata
 np.savez(f'clean_radiograph_{sim_name}.npz',
