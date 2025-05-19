@@ -72,42 +72,56 @@ optimizer_dnet = torch.optim.Adam(Dnet.parameters(), lr=learning_rate)
 # ------------------------ Loss Function ------------------------ #
 def compute_loss(filename):
     """
-    Compute the SSLR loss: 
-    - term1: NRMSE between Dnet(Enet(rad_noisy)) and rho
-    - term2: consistency between Enet(rad_noisy) and Enet(rad_clean)
+    Compute the SSLR (Self-Supervised Latent Representation) loss using pre-saved sample .npy files.
+
+    - term1: Normalized RMSE between Dnet(Enet(rad_noisy)) and ground truth rho
+    - term2: Latent consistency loss between Enet(rad_noisy) and Enet(rad_clean)
+
+    This version avoids dependency on simulation datasets and loads data from:
+        sample_data/rho_clean_<filename>.npy
+        sample_data/rad_noisy_<filename>.npy
+        sample_data/rad_clean_<filename>.npy
     """
-    # Load ground truth rho values
-    rho_seq = get_rho(filename, frames, Height, Width, clampval=clampval, air_threshold=0)
-    rho_clean = rho_seq.unsqueeze(1).float().to(device)  # [T, 1, H, W]
 
-    # Extract simulation name from filename
-    sim_name = filename[49:-3]
+    # ---------------- Load rho sequence (ground truth) ---------------- #
+    # Expected shape: (T, H, W)
+    rho_clean_path = f"sample_data/rho_clean_{filename}.npy"
+    rho_seq = torch.tensor(np.load(rho_clean_path))                  # Load numpy to tensor
+    rho_clean = rho_seq.unsqueeze(1).float().to(device)              # Add channel dim → (T, 1, H, W)
 
-    # Load noisy and clean radiograph data
-    rad_noisy_npz = np.load(f"{rad_path}noisy/noisy_{sim_name}.npz")['noisy_rad']
-    rad_clean_npz = np.load(f"{rad_path}direct/direct_{sim_name}.npz")['direct_rad']
+    # ---------------- Load noisy radiograph ---------------- #
+    rad_noisy_path = f"sample_data/rad_noisy_{filename}.npy"
+    rad_noisy = torch.tensor(np.load(rad_noisy_path))                # Shape: (T, H, W)
+    rad_noisy = rad_noisy.unsqueeze(1).float().to(device)            # (T, 1, H, W)
 
-    # Select the desired view and convert to tensors
-    rad_noisy = torch.tensor(rad_noisy_npz[:, :, select_view, :]).unsqueeze(1).float().to(device)
-    rad_clean = torch.tensor(rad_clean_npz[:, :, select_view, :]).unsqueeze(1).float().to(device)
+    # ---------------- Load clean radiograph ---------------- #
+    rad_clean_path = f"sample_data/rad_clean_{filename}.npy"
+    rad_clean = torch.tensor(np.load(rad_clean_path))                # Shape: (T, H, W)
+    rad_clean = rad_clean.unsqueeze(1).float().to(device)            # (T, 1, H, W)
 
-    # Clamp values to avoid log(0)
+    # ---------------- Avoid log(0) ---------------- #
     rad_noisy[rad_noisy <= 0] = 1e-15
     rad_clean[rad_clean <= 0] = 1e-15
 
-    # Forward pass through encoder and decoder
-    Enet_rad_noisy = Enet(-torch.log(rad_noisy))
-    Enet_rad_clean = Enet(-torch.log(rad_clean))
-    Dnet_output = Dnet(Enet_rad_noisy)
+    # ---------------- Forward pass through Enet ---------------- #
+    Enet_rad_noisy = Enet(-torch.log(rad_noisy))                     # Encode noisy input
+    Enet_rad_clean = Enet(-torch.log(rad_clean))                     # Encode clean input
 
-    # Compute relative reconstruction loss (NRMSE)
+    # ---------------- Forward pass through Dnet ---------------- #
+    Dnet_output = Dnet(Enet_rad_noisy)                               # Decode from latent noisy encoding
+
+    # ---------------- Compute reconstruction loss ---------------- #
+    # term1 = relative L2 error (NRMSE) between output and ground truth rho
     term1 = torch.linalg.norm(Dnet_output - rho_clean) / torch.linalg.norm(rho_clean)
 
-    # Compute self-supervised consistency loss
+    # ---------------- Compute consistency loss ---------------- #
+    # term2 = similarity between noisy and clean encodings
     term2 = torch.sum(torch.abs(Enet_rad_noisy - Enet_rad_clean)) / torch.sum(torch.abs(Enet_rad_clean))
 
-    # Return total loss and term1 for logging
-    return term1 + lamda * term2, term1
+    # ---------------- Return total SSLR loss ---------------- #
+    total_loss = term1 + lamda * term2
+    return total_loss, term1
+
 
 # ------------------------ Training Loop ------------------------ #
 
