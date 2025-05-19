@@ -68,59 +68,65 @@ Dnet = Unet(in_chans=nChannels, out_chans=nChannels, chans=32 * nChannels).to(de
 optimizer_enet = torch.optim.Adam(Enet.parameters(), lr=learning_rate)
 optimizer_dnet = torch.optim.Adam(Dnet.parameters(), lr=learning_rate)
 
-# ------------------------ Utility: Optional Masking ------------------------ #
-def masking(img, radius=60, mask_outer=False):
-    """
-    Create a circular mask for removing inside/outside pixels.
-    """
-    img_masked = np.copy(img)
-    centre = img.shape[0] // 2
-    for x in range(img.shape[0]):
-        for y in range(img.shape[1]):
-            if mask_outer:
-                if (x - centre)**2 + (y - centre)**2 > radius**2:
-                    img_masked[x, y] = 0
-            else:
-                if (x - centre)**2 + (y - centre)**2 < radius**2:
-                    img_masked[x, y] = 0
-    return img_masked
-
 # ------------------------ Loss Function ------------------------ #
-def compute_loss(filename):
+def compute_loss(filename=None):
     """
-    Compute total loss: reconstruction error + edge regularization term.
+    Compute total loss
+    
+    Returns:
+        total_loss (torch.Tensor): Combined reconstruction and edge loss.
+        term1 (torch.Tensor): Normalized reconstruction error (NRMSE).
     """
-    rho_seq = get_rho(filename, frames, Height, Width, clampval=50, air_threshold=0)
-    rho_clean = rho_seq.unsqueeze(1).float().to(device)  # Add channel dimension
 
-    sim_name = filename[49:-3]  # Extract sim ID
+    # ----------- Load pre-generated numpy arrays from 'sample_data/' folder ----------- #
+    # These arrays are provided in the repository for testing and demonstration purposes.
 
-    # Load radiograph data
-    noisy_npz = np.load(f"{rad_path}noisy/noisy_{sim_name}.npz")['noisy_rad']
-    clean_npz = np.load(f"{rad_path}direct/direct_{sim_name}.npz")['direct_rad']
+    # Load ground truth density (rho) sequence
+    # Expected shape: (T, H, W) where T = number of frames (e.g., 4), H=W=650
+    rho_clean = torch.tensor(np.load("sample_data/rho_clean" + filename + ".npy"))  # Load " + filename + ".npy as torch tensor
+    rho_clean = rho_clean.unsqueeze(1).float().to(device)           # Add channel dimension: (T, 1, H, W)
 
-    rad_noisy = torch.tensor(noisy_npz[:, :, select_view, :]).unsqueeze(1).float().to(device)
-    rad_clean = torch.tensor(clean_npz[:, :, select_view, :]).unsqueeze(1).float().to(device)
+    # Load noisy radiograph input
+    # Expected shape: (T, H, W) matching rho_clean
+    rad_noisy = torch.tensor(np.load("sample_data/rad_noisy" + filename + ".npy"))
+    rad_noisy = rad_noisy.unsqueeze(1).float().to(device)           # (T, 1, H, W)
 
-    # Prevent log(0)
+    # Load clean radiograph (not used directly but included for completeness)
+    rad_clean = torch.tensor(np.load("sample_data/rad_clean" + filename + ".npy"))
+    rad_clean = rad_clean.unsqueeze(1).float().to(device)           # (T, 1, H, W)
+
+    # Load the precomputed Canny edge map (from the original rho data)
+    edgemap = torch.tensor(np.load("sample_data/edgemap" + filename + ".npy"))
+    edgemap = edgemap.unsqueeze(1).float().to(device)               # (T, 1, H, W)
+
+    # ----------- Safety clamp to avoid log(0) or log(negative) ----------- #
     rad_noisy[rad_noisy <= 0] = 1e-15
     rad_clean[rad_clean <= 0] = 1e-15
 
-    # Forward passes
-    Enet_rad_noisy = Enet(-torch.log(rad_noisy))
-    Dnet_output = Dnet(Enet_rad_noisy)
+    # ----------- Forward pass through the encoder (Enet) ----------- #
+    # Convert radiograph to log-space (simulating Beer-Lambert law)
+    # Enet outputs latent representation from noisy measurement
+    Enet_rad_noisy = Enet(-torch.log(rad_noisy))                    # Output: (T, 1, H, W)
 
-    # Load Canny edge map
-    edgemap_path = f"/egr/research-slim/gautamsi/shared/hydro_simulations/edgemap-canny/edgemap_canny_2d_{sim_name}.npy"
-    edgemap = torch.tensor(np.load(edgemap_path)).unsqueeze(1).float().to(device)
+    # ----------- Forward pass through the decoder (Dnet) ----------- #
+    # Dnet takes latent features and reconstructs the density map (rho)
+    Dnet_output = Dnet(Enet_rad_noisy)                              # Output: (T, 1, H, W)
 
-    # Reconstruction loss (NRMSE)
+    # ----------- Compute Normalized RMSE reconstruction loss ----------- #
+    # term1 = ||Dnet_output - rho_clean|| / ||rho_clean||
     term1 = torch.linalg.norm(Dnet_output - rho_clean) / torch.linalg.norm(rho_clean)
 
-    # Edge loss
+    # ----------- Compute Edge Consistency Loss ----------- #
+    # This encourages encoder outputs to be structurally aligned with the Canny edge map
+    # term2 = mean absolute error between encoder output and edge map
     term2 = torch.sum(torch.abs(Enet_rad_noisy - edgemap)) / torch.sum(torch.abs(edgemap))
 
-    return term1 + lamda * term2, term1
+    # ----------- Total Loss: Weighted sum of reconstruction + edge regularization ----------- #
+    total_loss = term1 + lamda * term2
+
+    return total_loss, term1
+
+
 
 # ------------------------ Training Loop ------------------------ #
 training_loss = np.zeros(nEpochs)
