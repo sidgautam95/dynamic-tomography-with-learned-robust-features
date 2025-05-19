@@ -6,8 +6,8 @@ import sys                                # Used for interacting with the system
 import numpy as np                        # For array operations
 import torch                              # PyTorch for deep learning
 import matplotlib.pyplot as plt           # For plotting training/validation loss and NRMSE curves
-from unet import Unet                     
-from utils import *               
+from models.unet import Unet                     
+from utils.utils import *               
 
 # Clear the CUDA memory cache to avoid out-of-memory errors
 torch.cuda.empty_cache()
