@@ -6,8 +6,8 @@ import sys                           # For interacting with the system and file 
 import numpy as np                   # For numerical operations and arrays
 import matplotlib.pyplot as plt      # For plotting training/validation curves
 import torch                         # Main PyTorch library
-from unet import Unet                # Custom U-Net model architecture
-from utils import get_rho            # Function to load ground truth data (rho)
+from models.unet import Unet                # Custom U-Net model architecture
+from utils.utils import *
 
 # Clear any residual memory from previous CUDA sessions
 torch.cuda.empty_cache()
