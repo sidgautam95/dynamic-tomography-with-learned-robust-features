@@ -51,11 +51,6 @@ print(f"Simulation Parameters\nSize: {Height}x{Width}, Frames: {Nframes}, Traini
       f"Epochs: {nEpochs}, LR: {learning_rate}")
 print("Predict frames:", frames)
 
-# ------------------------ Shuffle Dataset ------------------------ #
-perm = np.random.permutation(nFiles)         # Shuffle indices
-train_idx = perm[:nTrain]                    # Training indices
-val_idx = perm[nTrain:nTrain + nValidation]  # Validation indices
-
 # ------------------------ Model Setup ------------------------ #
 # Initialize encoder and decoder models with U-Net architecture
 Enet = Unet(in_chans=nChannels, out_chans=nChannels, chans=32 * nChannels).to(device).train()
@@ -166,7 +161,7 @@ for epoch in range(nEpochs):
     torch.save(Dnet.state_dict(), f"{PATH}_dnet.pt")
 
     # ---- Save Logs ---- #
-    np.savez(f"{PATH}.npz", train_idx=train_idx, val_idx=val_idx, batch_size=batch_size,
+    np.savez(f"{PATH}.npz", batch_size=batch_size,
              nChannels=nChannels, nEpochs=nEpochs, learning_rate=learning_rate,
              training_filenames=training_filenames, validation_filenames=validation_filenames,
              training_loss=training_loss, validation_loss=validation_loss)
