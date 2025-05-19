@@ -1,6 +1,6 @@
 import numpy as np
-from utils import *
-from rotate_rho_3d import *
+from utils.utils import *
+from utils.rotate_rho_3d import *
 from compute_areal_density import *
 
 # ------------------------------#
