@@ -6,9 +6,6 @@ from generate_direct_rad import *
 # ------------------------------#
 # Parameters and Configuration  #
 # ------------------------------#
-
-hydro_path = '/egr/research-slim/shared/hydro_simulations/data/'  # Path to hydro simulations
-collimator_file = '../kernels/RMI_Collimator_ArealMass.dat'       # Collimator areal mass file
 frames = np.array([19, 23, 27, 31])                               # Frame indices to process
 Height = Width = 650                                              # Output image size
 air_threshold = 10                                                # Threshold to separate air and metal
@@ -20,29 +17,23 @@ mac_ta = 4e-2  # Mass attenuation coefficient for tantalum
 mac_air = 3e-2 # Mass attenuation coefficient for air
 num_views = 1  # Number of views (angles)
 
-# ------------------------------#
-# Load and Crop Collimator      #
-# ------------------------------#
+# Load collimator from sample file (shape: [650, 650])
+collimator = np.load("sample_data/collimator.npy") 
 
-collimator = np.genfromtxt(collimator_file).reshape((880, 880))  # Load and reshape collimator
-# Crop the collimator to match image size
-collimator = collimator[(880 - Height)//2:(880 + Height)//2, (880 - Width)//2:(880 + Width)//2]
+# Load rho sequence from sample file (shape: [T, H, W])
+# Here, 'sample001' is an identifier (you can change this)
+sample_id = "sample001"
+rho_seq = np.load(f"sample_data/rho_clean_{sample_id}.npy")  # shape: (T, H, W)
 
-# ------------------------------#
-# Radiograph Generation         #
-# ------------------------------#
-
-sim_name = 'data_ta_2d_profile0.vel0.mgrg00.s10.cs0.cv0.ptwg00'   # Simulation name
-filename = hydro_path + sim_name + '.nc'                          # Full simulation file path
-rho_seq = get_rho(filename, frames, Height, Width)                # Load rho sequence
 
 # Allocate memory for clean radiographs
 direct_rad = np.zeros((len(frames), num_views, Height, Width))
 
 # Loop over frames
 for frame_idx in range(len(frames)):
-    rho_2d = rho_seq[frame_idx].cpu().detach().numpy()            # Get 2D density for frame
-    rho_3d = rotate_rho_3d(rho_2d)                                # Rotate to 3D
+    rho_2d = rho_seq[frame_idx]                                   # Get 2D density for frame
+    
+    rho_3d = rotate_rho_3d(rho_2d)                                # Rotate to 3D (assumes that the object is axisymmetric
 
     # Extract metal (tantalum) and air components
     rho_ta_3d = np.copy(rho_3d)
