@@ -21,7 +21,6 @@ learning_rate = 1e-3                      # Learning rate for the optimizers
 nEpochs = 1000                            # Number of training epochs
 nChannels = 1                             # Number of channels (grayscale image)
 frames = np.array([19, 23, 27, 31])       # Time frames to be used for training
-select_view = 0                           # Radiograph view index to use
 num_alternate = 3                         # Number of alternating updates for Enet and Dnet
 lamda = 1e3                               # Regularization coefficient
 gpu_no = 0                                # GPU index to use
@@ -68,13 +67,8 @@ def compute_loss(filename):
     """
     Compute the SSLR (Self-Supervised Latent Representation) loss using pre-saved sample .npy files.
 
-    - term1: Normalized RMSE between Dnet(Enet(rad_noisy)) and ground truth rho
-    - term2: Latent consistency loss between Enet(rad_noisy) and Enet(rad_clean)
-
-    This version avoids dependency on simulation datasets and loads data from:
-        sample_data/rho_clean_<filename>.npy
-        sample_data/rad_noisy_<filename>.npy
-        sample_data/rad_clean_<filename>.npy
+    - term1: Normalized RMSE between the clean and the reconstructed density
+    - term2: Feature consistency loss between the clean and noisy features
     """
 
     # ---------------- Load rho sequence (ground truth) ---------------- #
