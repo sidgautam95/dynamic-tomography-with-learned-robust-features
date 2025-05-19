@@ -13,9 +13,6 @@ from utils import *                  # Function to load and process hydro data
 # ------------------------ Environment Setup ------------------------ #
 torch.cuda.empty_cache()                   # Clear GPU cache to avoid OOM issues
 
-# ------------------------ File Paths ------------------------ #
-hydro_path = '/egr/research-slim/shared/hydro_simulations/data/'  # Path to hydro data
-rad_path = '/egr/research-slim/shared/hydro_simulations/radiographs-conebeam-all-files/'  # Path to radiographs
 
 # Load training and validation filenames
 training_filenames = open('training_filenames.txt', 'r').readlines()
