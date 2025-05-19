@@ -23,6 +23,10 @@ def get_areal_density_astra(rho_3d, num_views=1, dl=0.25, dso=1330, dsd=5250):
 
     Returns:
         np.ndarray: Areal density image (num_views x H x W) in g/cm²
+
+    References:
+        ASTRA Toolbox 3D Cone-Beam Geometry:
+        https://astra-toolbox.com/docs/geom3d.html
     """
     img = np.copy(rho_3d) * 1e-3  # Convert from g/cm³ to g/mm³
     img[img < 0] = 0              # Remove negative densities
