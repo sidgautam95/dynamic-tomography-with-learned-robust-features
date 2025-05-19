@@ -22,23 +22,22 @@ validation_filenames = open('validation_filenames.txt', 'r').readlines()  # Load
 # ------------------------ Hyperparameters ------------------------ #
 gpu_no = 5                            # Index of GPU to use
 Height = 650                          # Image height
-Width = Height                        # Image width (assumed square)
+Width = Height                        # Image width
 clampval = 50                         # Max clamp value for rho
-crop_pixel = Height // 2              # Not used here, but could be for cropping
 batch_size = 1                        # Batch size
 learning_rate = 1e-3                  # Learning rate for optimizers
 nEpochs = 100                         # Number of training epochs
-nChannels = 1                         # Number of input/output channels
-nClasses = 1                          # Number of output classes (unused)
+nChannels = 1                         # Number of input channels
+nClasses = 1                          # Number of output channels
 frames = np.array([19, 23, 27, 31])   # Time frames to extract from simulation
 select_view = 0                       # Which radiograph view to use
 split_ratio = 0.1                     # Not used here, could be for auto split
 num_alternate = 3                     # Alternate updates between encoder and decoder
 
-nTrain = 10                           # Limit training size (for debugging/speed)
-nValidation = 1                       # Limit validation size
-nFiles = nTrain + nValidation         # Total number of files
-Nframes = len(frames)                 # Number of frames per sample
+nTrain = len(training_filenames)        # Number of training files
+nValidation = len(validation_filenames) # Number of validation files
+nFiles = nTrain + nValidation           # Total number of files
+Nframes = len(frames)                   # Number of frames per sample
 
 # ------------------------ Device Setup ------------------------ #
 os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_no)                      # Restrict GPU visibility
