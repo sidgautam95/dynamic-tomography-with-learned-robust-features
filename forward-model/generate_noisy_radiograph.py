@@ -5,11 +5,12 @@ from add_noise_to_radiograph import *
 # Load Clean Radiograph         #
 # ------------------------------#
 
-sim_name = 'data_ta_2d_profile0.vel0.mgrg00.s10.cs0.cv0.ptwg00'
+# Sample identifier — change this if you have multiple samples
+sample_id = 'sample001'
 
-# Load the clean radiograph file generated earlier
-data = np.load('clean_radiograph_'+sim_name + '.npz')
-direct_rad = data['direct_rad']
+# Load the clean radiograph and metadata from sample_data/
+data = np.load(f'sample_data/clean_radiograph_{sample_id}.npz')
+direct_rad = data['direct_rad']              # shape: (T, views, H, W)
 frames = data['frames']
 num_views = data['num_views']
 
