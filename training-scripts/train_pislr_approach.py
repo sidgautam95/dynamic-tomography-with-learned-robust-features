@@ -72,7 +72,6 @@ def compute_loss(filename=None):
     """
 
     # ----------- Load pre-generated numpy arrays from 'sample_data/' folder ----------- #
-    # These arrays are provided in the repository for testing and demonstration purposes.
 
     # Load ground truth density (rho) sequence
     # Expected shape: (T, H, W) where T = number of frames (e.g., 4), H=W=650
@@ -84,11 +83,7 @@ def compute_loss(filename=None):
     rad_noisy = torch.tensor(np.load("sample_data/rad_noisy" + filename + ".npy"))
     rad_noisy = rad_noisy.unsqueeze(1).float().to(device)           # (T, 1, H, W)
 
-    # Load clean radiograph (not used directly but included for completeness)
-    rad_clean = torch.tensor(np.load("sample_data/rad_clean" + filename + ".npy"))
-    rad_clean = rad_clean.unsqueeze(1).float().to(device)           # (T, 1, H, W)
-
-    # Load the precomputed Canny edge map (from the original rho data)
+    # Load the precomputed Canny edgemaps (from the clean training densities)
     edgemap = torch.tensor(np.load("sample_data/edgemap" + filename + ".npy"))
     edgemap = edgemap.unsqueeze(1).float().to(device)               # (T, 1, H, W)
 
@@ -97,12 +92,11 @@ def compute_loss(filename=None):
     rad_clean[rad_clean <= 0] = 1e-15
 
     # ----------- Forward pass through the encoder (Enet) ----------- #
-    # Convert radiograph to log-space (simulating Beer-Lambert law)
-    # Enet outputs latent representation from noisy measurement
+    # Get Noisy Features
     Enet_rad_noisy = Enet(-torch.log(rad_noisy))                    # Output: (T, 1, H, W)
 
     # ----------- Forward pass through the decoder (Dnet) ----------- #
-    # Dnet takes latent features and reconstructs the density map (rho)
+    # Apply decoder output on the features to get reconstructed density
     Dnet_output = Dnet(Enet_rad_noisy)                              # Output: (T, 1, H, W)
 
     # ----------- Compute Normalized RMSE reconstruction loss ----------- #
