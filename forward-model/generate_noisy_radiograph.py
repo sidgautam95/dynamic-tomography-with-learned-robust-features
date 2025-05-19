@@ -1,5 +1,5 @@
 import numpy as np
-from add_noise_to_radiograph import *
+from utils.add_noise_to_radiograph import *
 
 # ------------------------------#
 # Load Clean Radiograph         #
