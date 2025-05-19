@@ -7,8 +7,8 @@ import numpy as np                         # For numerical operations
 import matplotlib.pyplot as plt            # For plotting loss/NRMSE curves
 import torch                               # For deep learning operations
 from skimage import filters, feature       # For image processing (not directly used here)
-from unet import Unet                      # U-Net model architecture
-from utils import *                  # Function to load and process hydro data
+from models.unet import Unet                      # U-Net model architecture
+from utils.utils import *                  # Function to load and process hydro data
 
 # ------------------------ Environment Setup ------------------------ #
 torch.cuda.empty_cache()                   # Clear GPU cache to avoid OOM issues
