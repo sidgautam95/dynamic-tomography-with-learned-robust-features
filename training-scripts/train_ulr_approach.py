@@ -13,8 +13,6 @@ from utils import get_rho            # Function to load ground truth data (rho)
 torch.cuda.empty_cache()
 
 # ------------------------ Paths ------------------------ #
-hydro_path = '/egr/research-slim/shared/hydro_simulations/data/'  # Ground-truth data
-rad_path = '/egr/research-slim/shared/hydro_simulations/radiographs-conebeam-all-files/'  # Radiographs
 PATH = "ulr_model"  # Path prefix to save model and log files
 
 # ------------------------ Load Filenames ------------------------ #
@@ -70,36 +68,46 @@ optimizer_dnet = torch.optim.Adam(Dnet.parameters(), lr=learning_rate)
 # ------------------------ Loss Function ------------------------ #
 def compute_loss(filename):
     """
-    Compute the reconstruction loss and return loss and NRMSE term.
+    Compute the reconstruction loss using sample .npy files instead of simulation data.
+
+    Args:
+        filename (str): Identifier string to match sample file names (e.g., 'sample001').
+
+    Returns:
+        tuple: (total_loss, NRMSE) where total_loss = NRMSE (no regularization used).
     """
-    # Load the ground-truth density map for selected frames
-    rho_seq = get_rho(filename, frames, Height, Width, clampval=clampval, air_threshold=0)
-    rho_clean = rho_seq.unsqueeze(1).float().to(device)  # Shape: [T, 1, H, W]
 
-    # Extract simulation name from filename path
-    sim_name = filename[49:-3]
+    # ---------------- Load rho ground truth sequence ---------------- #
+    # Expected shape: (T, H, W)
+    rho_path = f"sample_data/rho_clean_{filename}.npy"
+    rho_seq = torch.tensor(np.load(rho_path))                      # Load as torch tensor
+    rho_clean = rho_seq.unsqueeze(1).float().to(device)            # Add channel dim → (T, 1, H, W)
 
-    # Load noisy and clean radiographs
-    rad_noisy_npz = np.load(f"{rad_path}noisy/noisy_{sim_name}.npz")['noisy_rad']
-    rad_clean_npz = np.load(f"{rad_path}direct/direct_{sim_name}.npz")['direct_rad']
+    # ---------------- Load noisy radiograph ---------------- #
+    rad_noisy_path = f"sample_data/rad_noisy_{filename}.npy"
+    rad_noisy = torch.tensor(np.load(rad_noisy_path))              # Shape: (T, H, W)
+    rad_noisy = rad_noisy.unsqueeze(1).float().to(device)          # Shape: (T, 1, H, W)
 
-    # Convert to tensors and select desired view
-    rad_noisy = torch.tensor(rad_noisy_npz[:, :, select_view, :]).unsqueeze(1).float().to(device)
-    rad_clean = torch.tensor(rad_clean_npz[:, :, select_view, :]).unsqueeze(1).float().to(device)
+    # ---------------- Load clean radiograph ---------------- #
+    rad_clean_path = f"sample_data/rad_clean_{filename}.npy"
+    rad_clean = torch.tensor(np.load(rad_clean_path))              # Shape: (T, H, W)
+    rad_clean = rad_clean.unsqueeze(1).float().to(device)          # Shape: (T, 1, H, W)
 
-    # Avoid log(0) issues
+    # ---------------- Avoid log(0) ---------------- #
     rad_noisy[rad_noisy <= 0] = 1e-15
     rad_clean[rad_clean <= 0] = 1e-15
 
-    # Pass through networks
-    Enet_rad_noisy = Enet(-torch.log(rad_noisy))        # Encode noisy radiograph
-    Enet_rad_clean = Enet(-torch.log(rad_clean))        # Encode clean radiograph (not used here)
-    Dnet_output = Dnet(Enet_rad_noisy)                  # Decode to predict rho
+    # ---------------- Forward passes ---------------- #
+    Enet_rad_noisy = Enet(-torch.log(rad_noisy))                   # Getting encdoer features
+    Dnet_output = Dnet(Enet_rad_noisy)                             # Getting decoder output
 
-    # Compute relative reconstruction error (NRMSE)
+    # ---------------- Compute NRMSE loss ---------------- #
+    # Normalized root mean square error: ||prediction - ground_truth|| / ||ground_truth||
     term1 = torch.linalg.norm(Dnet_output - rho_clean) / torch.linalg.norm(rho_clean)
 
-    return term1, term1  # (total loss, NRMSE term)
+    # Return both total loss and term1 (since they are identical here)
+    return term1, term1
+
 
 # ------------------------ Training Loop ------------------------ #
 # Initialize loss trackers
