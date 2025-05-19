@@ -58,7 +58,7 @@ def get_areal_density_astra(rho_3d, num_views=1, dl=0.25, dso=1330, dsd=5250):
     return areal_density.transpose((1, 0, 2))  # shape: [views, height, width]
 
 
-def generate_direct_rad(areal_density_ta, areal_density_air, collimator, mac_ta=4e-2, mac_air=3e-2):
+def simulate_radiograph(areal_density_ta, areal_density_air, collimator, mac_ta=4e-2, mac_air=3e-2):
     """
     Generates a direct radiograph from areal density volumes.
 
