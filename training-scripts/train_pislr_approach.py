@@ -45,10 +45,6 @@ PATH = "pislr_model"
 os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_no)                     # Set GPU visibility
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')# Set computation device
 
-# ------------------------ Shuffle Data ------------------------ #
-perm = np.random.permutation(nFiles)        # Random permutation of indices
-train_idx = perm[:nTrain]                   # Training indices
-val_idx = perm[nTrain:nTrain + nValidation] # Validation indices
 
 # ------------------------ Logging Info ------------------------ #
 print(f"Regularization λ: {lamda}")
@@ -182,7 +178,7 @@ for epoch in range(nEpochs):
     torch.save(Dnet.state_dict(), f"{PATH}_dnet.pt")
 
     # -------- Save Logs -------- #
-    np.savez(f"{PATH}.npz", train_idx=train_idx, val_idx=val_idx,
+    np.savez(f"{PATH}.npz",
              batch_size=batch_size, nChannels=nChannels, nEpochs=nEpochs,
              learning_rate=learning_rate, training_filenames=training_filenames,
              validation_filenames=validation_filenames, training_loss=training_loss,
