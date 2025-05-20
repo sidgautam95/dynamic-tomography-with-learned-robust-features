@@ -128,8 +128,7 @@ Default parameters for in-population testing include:
 
 ## Datasets
 
-The synthetic datasets used in this work are not publicly available due to copyright restrictions with Los Alamos National Laboratory.  
-However, users may generate their own radiographs using the provided scripts and customize scatter/noise models as needed.
+The synthetic datasets used in this work are not publicly available due to copyright restrictions with Los Alamos National Laboratory. However, users may generate their own radiographs using the provided scripts and customize scatter/noise models as needed.
 
 ---
 
@@ -138,4 +137,4 @@ However, users may generate their own radiographs using the provided scripts and
 The code is provided to support reproducible research.  
 If you have any questions, suggestions, or encounter issues running the code, feel free to reach out:
 
-Siddhant Gautam — [gautamsi@msu.edu](mailto:gautamsi@msu.edu), Saiprasad Ravishankar — [ravisha3@msu.edu](mailto:ravisha3@msu.edu)
+Siddhant Gautam - [gautamsi@msu.edu](mailto:gautamsi@msu.edu), Saiprasad Ravishankar - [ravisha3@msu.edu](mailto:ravisha3@msu.edu)
