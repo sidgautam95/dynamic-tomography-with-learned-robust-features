@@ -2,6 +2,13 @@
 Cone-beam Computation of Areal Density Using ASTRA Toolbox
 ===========================================================
 
+Original Author:
+    Gabriel Maliakal (Michigan State University)
+
+Contributors / Editors:
+    Siddhant Gautam (Michigan State University)
+
+Description:
 - Computes areal density for tantalum and air components from 3D density volumes.
 - Generates direct radiographs using exponential attenuation with mass attenuation coefficients.
 """
@@ -17,7 +24,7 @@ def get_areal_density_astra(rho_3d, num_views=1, dl=0.25, dso=1330, dsd=5250):
     Parameters:
         rho_3d (np.ndarray): 3D density volume (H x W x W) in g/cm³
         num_views (int): Number of projection angles
-        dl (float): Pixel spacing in cm
+        dl (float): Pixel spacing in mm
         dso (float): Distance from source to origin in mm
         dsd (float): Distance from source to detector in mm
 
