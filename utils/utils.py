@@ -33,3 +33,35 @@ def get_rho(filename, frames, Height = 880, Width = 880, clampval=50, air_thresh
 
 def torch_nrmse(img_gt,img_recon):
     return torch.linalg.norm(img_gt-img_recon)/torch.linalg.norm(img_gt)
+
+# ----------------------------#
+# Utility: Circular Masking   #
+# ----------------------------#
+def masking(img, radius=60, mask_outer=False):
+    """
+    Applies a circular mask to the input image.
+
+    Parameters:
+        img (np.ndarray): Input image to mask.
+        radius (int): Radius of the circular region to mask.
+        mask_outer (bool): 
+            - If True: zeros out everything *outside* the circle.
+            - If False: zeros out everything *inside* the circle.
+
+    Returns:
+        np.ndarray: Masked image.
+    """
+    img_masked = np.copy(img)                       # Make a copy of the input to avoid altering original
+    center = img.shape[0] // 2                      # Assume image is square; center is at (H/2, W/2)
+    
+    for x in range(img.shape[0]):                   # Iterate through each pixel
+        for y in range(img.shape[1]):
+            # Mask logic: preserve only points inside or outside a circle
+            if mask_outer:
+                if (x - center) ** 2 + (y - center) ** 2 > radius ** 2:
+                    img_masked[x, y] = 0            # Outside the circle → zero
+            else:
+                if (x - center) ** 2 + (y - center) ** 2 < radius ** 2:
+                    img_masked[x, y] = 0            # Inside the circle → zero
+    return img_masked
+
