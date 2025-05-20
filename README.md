@@ -138,5 +138,4 @@ However, users may generate their own radiographs using the provided scripts and
 The code is provided to support reproducible research.  
 If you have any questions, suggestions, or encounter issues running the code, feel free to reach out:
 
-- Siddhant Gautam — [gautamsi@msu.edu](mailto:gautamsi@msu.edu)  
-- Saiprasad Ravishankar — [ravisha3@msu.edu](mailto:ravisha3@msu.edu)
+Siddhant Gautam — [gautamsi@msu.edu](mailto:gautamsi@msu.edu), Saiprasad Ravishankar — [ravisha3@msu.edu](mailto:ravisha3@msu.edu)
