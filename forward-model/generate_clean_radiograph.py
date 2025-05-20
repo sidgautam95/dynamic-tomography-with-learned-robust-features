@@ -17,13 +17,12 @@ mac_ta = 4e-2  # Mass attenuation coefficient for tantalum
 mac_air = 3e-2 # Mass attenuation coefficient for air
 num_views = 1  # Number of views (angles)
 
-# Load collimator from sample file (shape: [650, 650])
-collimator = np.load("sample_data/collimator.npy") 
+# Replace by your collimator file of same dimensions as the density image
+collimator = np.load("collimator.npy") 
 
 # Load rho sequence from sample file (shape: [T, H, W])
-# Here, 'sample001' is an identifier (you can change this)
-sample_id = "sample001"
-rho_seq = np.load(f"sample_data/rho_clean_{sample_id}.npy")  # shape: (T, H, W)
+# Replace by your density image
+rho_seq = np.load(f"rho_clean_.npy")  # shape: (T, H, W)
 
 
 # Allocate memory for clean radiographs
