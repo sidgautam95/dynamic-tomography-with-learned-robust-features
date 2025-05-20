@@ -126,9 +126,8 @@ Default parameters for in-population testing include:
 
 ---
 
-## Datasets
-
-The synthetic datasets used in this work are not publicly available due to copyright restrictions with Los Alamos National Laboratory. However, users may generate their own radiographs using the provided scripts and customize scatter/noise models as needed.
+## Data availability. 
+The data underlying the results presented in this paper are not publicly available at this time but may be obtained from the authors upon reasonable request. However, users may generate their own radiographs using the provided scripts and customize scatter/noise models as needed.
 
 ---
 
