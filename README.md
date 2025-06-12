@@ -4,12 +4,10 @@
 
 Python implementation for the paper:
 
-**Siddhant Gautam, Marc L. Klasky, Balasubramanya T. Nadiga, Trevor Wilcox, Gary Salazar, and Saiprasad Ravishankar.**  
-*"Learning Robust Features for Scatter Removal and Reconstruction in Dynamic ICF X-Ray Tomography."*  
-*Opt. Express* (2025).  
-DOI: [https://doi.org/10.1364/OE.565478](https://doi.org/10.1364/OE.565478)
-
-arXiv preprint [arXiv:2408.12766](https://arxiv.org/abs/2408.12766) (2024)
+**Siddhant Gautam, Marc L. Klasky, Balasubramanya T. Nadiga, Trevor Wilcox, Gary Salazar, and Saiprasad Ravishankar**  
+*“Learning Robust Features for Scatter Removal and Reconstruction in Dynamic ICF X-Ray Tomography.”*  
+*Optics Express*, 2025. DOI: [10.1364/OE.565478](https://doi.org/10.1364/OE.565478)  
+Also available as arXiv preprint: [arXiv:2408.12766](https://arxiv.org/abs/2408.12766)
 
 ---
 
